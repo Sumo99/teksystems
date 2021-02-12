@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shuffle some cardss</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link href="shuffle_cards.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item ">
+              <a class="nav-link active" href="main.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="Guess_the_number.html">Guess the number</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="roll_dice.html">Roll dice</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="shuffle_cards.html">Shuffle cards</a>
+              </li>
+           
+          </ul>
+        </div>
+      </nav>
+      <form id='my-form'>
+        <label for="How many cards do you want?">&nbsp; &nbsp;Enter the number of cards you want</label>
+        <br>
+        &nbsp; &nbsp;<input type="text" name="number" id="number" required pattern="\d+">
+        &nbsp; <input type="submit" class="btn btn-primary" style="position:relative;top:-3px;height: 30px; width:65px; padding: 0em 0em;">
+        &nbsp; <br><label for="Do you need jokers?" id="jokers">Enable jokers?</label>
+        &nbsp;  &nbsp; <select name="joker-dropdown" id="joker-dropdown">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+
+        </select>
+        
+    </form>
+    <div id= "cardImages">
+
+    </div>
+    <script>
+           document.getElementById('my-form').onsubmit = function(){
+            var num_of_cards = document.getElementById('number').value
+            var deckOfCards;
+            var imageHolder = document.getElementById('cardImages');
+            var fetchUrl = `https://deckofcardsapi.com/api/deck/new/draw/?count=${num_of_cards}`
+            var jokerDropdown = document.getElementById("joker-dropdown")
+            if(jokerDropdown.value === "Yes"){
+                fetchUrl = `https://deckofcardsapi.com/api/deck/new/draw/?count=${num_of_cards}&jokers_enabled=true`
+            }
+            const deck = fetch(fetchUrl)
+            .then(res => res.json())
+            .then(data => deckOfCards=data)
+            .then(() => console.log(deckOfCards["cards"].forEach(element => {
+                var img = document.createElement('img')
+                img.src = element["image"]
+                console.log(element["image"])
+                imageHolder.appendChild(img)
+            })));
+            
+            return false;
+        }
+    </script>
+</body>
+</html>

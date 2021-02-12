@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+body {
+ font-family: 'Muli', sans-serif;
+}
+nav{
+    background-color: #563D7C;
+}
+img{
+    padding:10px;
+}
+#jokers{
+    position: relative;
+    left:13px;
+}
+#exampleCheck1{
+    position: relative;
+    left:15px;
+}
+.joker-checkbox{
+    position: relative;
+    left:20px    ;
+}
